@@ -1,0 +1,114 @@
+
+项目名：dayfresh    应用名：fresh
+
+1. 创建数据库
+
+create database dayfresh charset=utf8;
+
+
+2.  新建项目,应用
+
+django-admin startproject dayfresh
+cd fresh/
+
+python manage.py startapp fresh
+
+
+3. 在setting中添加应用
+
+3.1 注释验证口令
+ 46 #    'django.middleware.csrf.CsrfViewMiddleware',
+
+
+
+4. 配置数据库：
+
+  4.1 创建数据库
+	mysql> create database dayfresh charset=utf8;
+	mysql> grant all privileges on dayfresh.* to 'dayfresh'@'%' identified by 'dayfresh';
+	mysql> flush privileges;
+  
+   4.2  在setting中添加数据库信息， 默认sqlight数据库 ，需换成mysql
+	78 DATABASES = {
+ 	79     'default': {
+ 	80         'ENGINE': 'django.db.backends.mysql',
+ 	81         'NAME': 'dayfresh',
+ 	82         'HOST': '192.168.13.65',
+ 	83         'PORT': '3306',
+ 	84         'USER': 'dayfresh'，
+ 	85         'PASSWORD': 'dayfresh',
+ 	86     }
+ 	87 }
+
+
+5. 创建表（models）
+python manage.py makemigrations
+python manage.py migrate
+
+如果报错如：   No migrations to apply.
+
+处理方法：1. rm -f /qing/django/datatest/qing/migrations/__init__.py and 报错的那个表名
+	  2. 	python manage.py makemigrations qing（应用名）
+
+
+注： 在多人共同项目中 提前规定好 class def 的函数的驼峰大小写
+
+6. 创建数据库管理员
+python manage.py createsuperuser
+
+注： user： fresh  pwd： passwd
+
+
+
+7. 配置admin.py 显示数据库信息
+
+8. 配置url 显示首页
+
+ 8.1   /qing/django/dayfresh
+	vim dayfresh/urls/
+
+	urlpatterns = [
+	    url(r'^admin/', include(admin.site.urls)),
+	   url(r'^', include('fresh/urls',namespace='fresh')),
+	]
+
+  8.2 vim fresh/urls.py
+
+	from django.conf.urls import url
+	from . import views
+	urlpatterns = [
+   	 url(r'^index/$',views.index,name='index'),        
+	]
+
+9. 定义视图
+
+10. 在视图中使用了模板，so 配置模板
+
+mkdir -p /qing/django/dayfresh/templates/fresh
+
+rz index.html
+
+
+11. 配置static
+mkdir static/fresh/css -p
+mkdir static/fresh/js -p
+mkdir static/fresh/images/goodsl/ -p
+mkdir static/fresh/images/goodsb/ -p
+chmod 777 static/fresh/images/goodsl/
+chmod 777 static/fresh/images/goodsb/
+
+
+
+12. 访问报错：
+
+错误：[02/Nov/2016 02:42:12]"GET /index HTTP/1.1" 500 106363
+- Broken pipe from ('127.0.0.1', 48554)
+
+解决方法： 项目下的urls 路径配置错误      
+	 url(r'^', include('fresh.urls',namespace='fresh')),    正确
+	    url(r'^', include('fresh/urls',namespace='fresh')), 错误
+
+	
+13. 从url中取出的位置变量（在view中引用） 是字符串   无法跟数字做比较， 所以需要转成整型
+
+	
