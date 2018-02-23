@@ -1,0 +1,167 @@
+1. xx 公有变量
+2. _x： 前置下划线，私有化属性或方法， from somemodule import *  禁止导入（类不会被导入，但不带单个下划线的类的属性可以导入），类对象和子类可以访问
+3. __xx: 双前置下划线， 避免与子类中的属性名冲突，无法类的外部直接访问（名字重整 所以访问不到）
+4. __xx__: 双前后下划线，用户名字空间的魔法对象或属性  如： __init__ , 不要使用这一的命名方式
+5. xx_: 单后置下划线， 用于避免与python关键字的冲突
+
+   ----- siyou.py --------
+class Person(object):
+    qing = 'qingmaoer'
+    def __init__(self, name, age, taste):
+        self.name = name
+        self._age = age
+        self.__taste = taste
+
+    def showPerson(self):
+        print (self.name)
+        print (self._age)
+        print (self.__taste)
+    
+    def _work(self):
+        print ('in _work')
+
+    def __away(self):
+        print ('in __alway')
+
+    def debug(self):
+        _Debug.showbug()
+
+
+ # 三种子类调用父类的方法       
+class Student(Person):
+
+    def showStudent(self):  
+        #self.showPerson   
+        #super(Student, self).showPerson() 
+        Person.showPerson(self)  # person类无法调用实例方法，所以传了一个self
+
+    def testParent(self):
+        self.showPerson()
+        self._work()    
+        self.__away()   # 双下划线不能被外部访问 会报错
+        self._Person__away()   #但是使用被重整过的名字（前置双下划线的名字重整）可以访问到 
+
+    def construction(self, name, age, taste):
+        self.name = name
+        self._age = age
+        self.__taste = taste
+
+    def showxuesheng(self):
+        print (self.name)
+        print (self._age)
+        print (self.__taste)     
+
+class _Debug(object):
+
+    @classmethod    # 使用类方法或静态方法 ，因为类不能调用实例方法，即不能使用 self 关键字
+    def showbug(cls):
+        print ('in showbug')
+  ------------------------------
+
+
+1.  不能导入带有一个前置下划线的类，如下只能到如Person类 却不能导入 _Debug 类：
+
+In [1]: from siyou import *
+
+In [3]: dir()
+Out[3]: 
+['In',
+ 'Out',
+...
+ 'Person',    # 只有 Person 类被导入
+ 'get_ipython',
+ 'quit']
+
+2. 但是类之间可以相互调用，可以使用Person 调用 _Debug 类
+
+
+In [2]: from siyou import *
+
+In [4]: qing = Person('qingmaoer',30,'gangqin')
+
+In [5]: qing.debug()
+in showbug
+
+3. 
+
+In [5]: dir(qing)
+Out[5]: 
+['_Person__away',  # 双下划线的变量和方法 名字被重整， _类名__方法名（属性名）
+ '_Person__taste',  # 看不到原来文件里定义的双下划线的方法
+   ...
+ '_age',
+ '_work',
+ 'debug',
+ 'name',
+ 'qing',
+ 'showPerson']
+
+In [6]: qing.qing
+Out[6]: 'qingmaoer'
+
+In [7]: qing.name
+Out[7]: 'qingmaoer'
+
+In [8]: qing._age
+Out[8]: 30
+
+In [9]: qing._work
+Out[9]: <bound method Person._work of <siyou.Person object at 0x10ccc3a50>>
+
+In [10]: qing._work()
+in _work
+
+
+#  使用定义的双下划线的方法 无法访问， 但可以使用名字重整后的方法 调用自定义的双下划线的方法
+
+In [11]: qing.__away()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-11-1652ce9441ab> in <module>()
+----> 1 qing.__away()
+
+AttributeError: 'Person' object has no attribute '__away'
+
+In [12]: 
+
+In [12]: qing._Person__away()
+in __alway
+
+# 双下划线的变量和方法 无法再外部访问（包括同一个py脚本）
+
+In [4]: s.testParent()
+qing
+20
+123
+in _work
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-4-9cd04e8be085> in <module>()
+----> 1 s.testParent()
+
+/Users/qingfeideyi/qing/demo/siyou.py in testParent(self)
+     32         self.showPerson()
+     33         self._work()
+---> 34         self.__away()           #### 父类的双下划线函数
+     35 
+     36 class _Debug(object):
+
+AttributeError: 'Student' object has no attribute '_Student__away'
+
+
+#  子类没有继承父类的双下划线的属性 ，自然也无法改变双下划线的属性（__taste）
+
+In [12]: s = Student('li',23,'rumeng')
+
+
+In [16]: s.showPerson()
+li
+23
+rumeng
+
+In [17]: s.construction('new',11,'newfun')
+
+In [18]: s.showPerson()
+new
+11
+rumeng #虽然重新定义了子类 __taste属性的值为”newfun“ ，但是在showPerson这个父类的方法中的__taste属性并没有改变, 因为父类的__taste无法被外部使用，子类就没法继承 ，所以无法修改
