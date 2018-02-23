@@ -1,0 +1,169 @@
+1. 实例属性： 实例对象独有的属性
+2. 类属性： 类名访问类属性
+3. 实例中无同名的属性时， 可访问到类属性， 当定义同名实例属性时，则无法访问
+4. 使用实例属性去修改类属性是十分危险，会改变之前没有修改类属性前生成的实例或者之后所有实例的属性，修改类属性需要使用类名，而不是实例名
+
+dir 显示类属性和所有实例属性
+In [9]: dir(qing)
+Out[9]: 
+['__class__',
+ '__delattr__',
+ '__dict__',
+ '__doc__',
+ '__format__',
+ '__getattribute__',
+ '__hash__',
+ '__init__',
+ '__module__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__',
+ 'grade',
+ 'lei',
+ 'name',
+ 'show']
+
+
+vars 查看实例内属性
+In [8]: vars(qing)
+Out[8]: {'name': 'qingmaoer'}
+
+
+
+
+   -----------------------
+lei.py
+class Qing(object):
+    grade = 18
+
+    def __init__(self, name):
+        self.name = name
+
+    def show(self):
+        print (self.name)
+   -----------------------
+
+# 通过实例可以访问类属性， 如下：
+
+In [1]: from lei import Qing
+
+In [2]: qing = Qing(name='qingmaoer')
+
+In [3]: qing.show()
+qingmaoer
+
+In [4]: qing.show
+Out[4]: <bound method Qing.show of <lei.Qing object at 0x109370710>>
+
+In [5]: qing.grade
+Out[5]: 18
+
+In [6]: ting = Qing(name='wangting')
+
+In [7]: ting.show()
+wangting
+
+# 通过实例修改属性不会影响类属性，如下：
+
+In [12]: qing.grade = 20
+
+In [13]: qing.grade
+Out[13]: 20
+
+In [14]: Qing.grade
+Out[14]: 18
+
+In [15]: ting.grade
+Out[15]: 18
+
+# 类无法访问实例方法，因为没有绑定： 如下： 
+
+In [10]: Qing.show
+Out[10]: <unbound method Qing.show>
+
+In [11]: Qing.show()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-11-2609b59f1774> in <module>()
+----> 1 Qing.show()
+
+TypeError: unbound method show() must be called with Qing instance as first argument (got nothing instead)
+
+           -----------------------------------------
+
+   -----------------------
+lei.py
+class Qing(object):
+    grade = 18
+
+    def __init__(self, name):
+        self.name = name
+
+    def show(self):
+        self.grade = 20          -------  重点属性
+        print (self.name)
+   -----------------------
+
+
+In [2]: qing = Qing(name='qingmaoer')
+
+In [3]: qing.grade
+Out[3]: 18
+
+# 在类方法中不能使用self 关键字（估计传入的是类本身，而不是实例对象吧）， 简单查阅后 在类方法中基本都是用 print输出内容 没有见到有使用其他的用处 暂时
+
+In [4]: qing.lei()
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-4-a1bf4afc1760> in <module>()
+----> 1 qing.lei()
+
+/Users/qingfeideyi/qing/demo/lei.py in lei(cls)
+     10     @classmethod
+     11     def lei(cls):
+---> 12         self.grade = 20
+
+NameError: global name 'self' is not defined
+
+
+# 将 12 行 self.grade 换成 类名 Qing.grade 重新导入
+
+   -----------------------
+class Qing(object):
+    grade = 18
+
+    def __init__(self, name):
+        self.name = name
+
+    def show(self):
+        print (self.name)
+
+    @classmethod
+    def lei(cls):
+        Qing.grade = 20
+   -----------------------
+
+In [1]: from lei import Qing
+
+In [2]: qing = Qing(name='qingmaoer')
+
+In [3]: qing.grade
+Out[3]: 18
+
+# 调用类方法 修改类属性
+In [4]: Qing.lei()
+
+# 修改类属性会影响之前生成实例的属性，也会影响后来实例的属性 如下（第4条）：
+In [5]: qing.grade
+Out[5]: 20
+
+In [6]: ting = Qing(name='wangting')
+
+In [7]: ting.grade
+Out[7]: 20
