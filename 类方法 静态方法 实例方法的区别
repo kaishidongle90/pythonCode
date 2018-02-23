@@ -1,0 +1,47 @@
+#conding:utf-8
+class Qing(object):
+
+    # 实例方法 参数是 self
+    def instancefun(self):
+        print ('instancefun')
+
+    # 类方法 参数是 cls
+    @classmethod
+    def classfun(cls):
+        print ('classfun')
+
+    #静态方法 没有参数
+    @staticmethod
+    def staticfun():
+        print ('staticfun')
+
+
+‘’‘
+1. 使用类名可以调用类方法和静态方法,但是不能调用实例方法 如下：
+In [3]: Qing.classfun()
+classfun
+
+In [4]: Qing.staticfun()
+staticfun
+
+In [5]: Qing.instancefun()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-5-4017dbd7c9cb> in <module>()
+----> 1 Qing.instancefun()
+
+TypeError: unbound method instancefun() must be called with Qing instance as first argument (got nothing instead)
+
+
+2. 类实例可以访问所有方法 如下： 
+
+In [6]: qing = Qing()
+
+In [7]: qing.instancefun()
+instancefun
+
+In [8]: qing.staticfun()
+staticfun
+
+In [9]: qing.staticfun()
+staticfun
