@@ -1,0 +1,21 @@
+闭包
+ 1. 内部函数对外部函数作用域里的变量的引用（非全局变量），则称内部函数为闭包
+ 2. 变量不会释放
+ def counter(start=0):
+    count = [start]
+    def incr():
+        count[0] +=1
+        return count[0]
+    return incr
+
+
+In [10]: b=counter(5)
+
+
+In [12]: print b()
+6
+
+# 闭包中函数的变量不会释放 重新调用 变量值会继续增长 
+# 缺点： 函数变量不释放，消耗内存
+In [13]: print b()   
+7
