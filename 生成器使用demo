@@ -1,0 +1,45 @@
+
+当需要一个非常大的列表时，为了减少内存消耗，可以使用生成器
+[]是通过遍历可迭代对象生成一个list
+()是直接返回可迭代对象
+
+class A(object):
+    def __init__(self, i): 
+        from time import sleep, time
+        sleep(i)
+        print (time())
+
+
+In [1]: from shengchengqi2 import A
+
+# 列表
+
+In [2]: for c in [A(x) for x in range(5)]:
+   ...:     print c
+   ...:     
+1519457724.83
+1519457725.83
+1519457727.83
+1519457730.84
+1519457734.84
+<shengchengqi2.A object at 0x1078921d0>
+<shengchengqi2.A object at 0x107892150>
+<shengchengqi2.A object at 0x107865e90>
+<shengchengqi2.A object at 0x107892390>
+<shengchengqi2.A object at 0x107892410>
+
+# 生成器（元祖形式）
+
+In [3]: for c in (A(x) for x in range(5)):
+   ...:     print c
+   ...:     
+1519457754.55
+<shengchengqi2.A object at 0x10786ef10>
+1519457755.55
+<shengchengqi2.A object at 0x107892410>
+1519457757.55
+<shengchengqi2.A object at 0x107892310>
+1519457760.55
+<shengchengqi2.A object at 0x107892410>
+1519457764.55
+<shengchengqi2.A object at 0x107892310>
