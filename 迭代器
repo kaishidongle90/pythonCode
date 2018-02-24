@@ -1,0 +1,52 @@
+1. 列表： 
+    优点： 随机访问 比较灵活
+    缺点： 耗内存
+
+2. 迭代器： 利用next()方法 1次返回1个数 生成一系列对象
+   优点： 省内存
+   缺点： 访问不灵活 慢 一个一个来
+
+注： 在python3中 range方法生成的队列 已经是迭代器了
+
+In [1]: num = [1, 2, 3, 4, 5, 6]
+
+# 列表没有next方法
+
+In [2]: num.text  
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-2-4931f3b7089d> in <module>()
+----> 1 num.text
+
+AttributeError: 'list' object has no attribute 'text'
+
+# 将列表转化成迭代器
+
+In [3]: n = iter(num)
+
+In [11]: type(n)
+Out[11]: listiterator
+
+In [4]: n.next()
+Out[4]: 1
+
+In [5]: n.next()
+Out[5]: 2
+
+ ....
+
+In [9]: n.next()
+Out[9]: 6
+
+
+# 超出迭代器范围的时候 会出发异常 
+
+In [10]: n.next()
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+<ipython-input-10-02431168eaae> in <module>()
+----> 1 n.next()
+
+StopIteration: 
+
+In [11]: 
