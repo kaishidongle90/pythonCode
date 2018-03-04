@@ -1,0 +1,231 @@
+列表的内建方法
+list.appedn(object)          append object to end    return none
+a=[1,2,3]
+a.append(4)
+a.append({‘age’:34})
+return none
+
+list.extend(utterable)    extend list by appending elements from the iterable    return  none
+a=[1,2,3]
+b=[3,4,5]
+a.extend(b)
+return none
+
+list.insert(index,object)  insert object before index
+a=[1,2,3]
+a.insert(0,’du’)
+return none
+
+list.pop([index])  remove and return item at index(default last)
+a=[1,2,3,4,5]
+a.pop(0)
+a.pop()
+return item
+
+list.reverse()
+a=[1,2,3,4]
+a.reverse()
+return  none
+
+list.count(value)  return number of occurrences of value
+a=[1,2,3,3,3,4]
+a.count(1)
+a.count(3)
+
+list.index(value,[start,[stop]])  return first index of value
+a=[1,2,3,4,5,6,2]
+a.index(2)     1
+a.index(2,2,)  6
+
+list.remove(value)   remove first occurrence of value
+a=[1,2,3,4,2]
+a.remove(2)    a=[1,3,4,2]
+return  None
+
+list.sort(cmp=None,key=None,reverse=False) 
+a=[1,4,2,3,5]
+a.sort()    a=[1,2,3,4,5]
+a=[‘du’,’dumc’,’d’,’dddddd’]
+a.sort(key=len)  a=[‘d’,’du’,’dumc’,’dddddd’]
+a=[1,4,2,5]
+a.sort(cmp,reverse=True)    a=[5,4,2,1]
+
+
+
+字典内建方法
+dict.clear()        remove all items from dict
+a=dict(x=1,y=2)
+a.clear()
+a={}
+return  None
+
+
+dict.get(k,[,d])     dict[k]  if k in dict, else d.   d defaults  to None
+a=dict(x=1,y=2)
+a.get(‘x’)    x
+a.get(‘z’,’sky’)   sky
+return  value
+
+dict.keys()   list of dict’s keys
+a=dict(x=1,y=2)
+a.keys()    [‘x’,’y’]
+return list
+
+dict.values()      list of dict’s values
+a={‘x’:1,’y’:2}
+a.values()   [1,2]
+return list
+
+dict.items()      list of D's (key, value) pairs, as 2-tuples
+a={‘x’:1,’y’:2}
+a.items()   [('y', 2), ('x', 1)]
+return list
+
+dict.copy()   a shallow copy of D
+a={‘x’:1,’y’:2}
+b=a.copy()
+b[‘z’]=3
+b  {'x': 3, 'y': None, 'z': 3}
+a  {‘x’:1,’y’:2}
+a={‘x’:1,’y’:2}
+b=a
+b[‘z’]=3
+b  {'x': 3, 'y': None, 'z': 3}
+a  {'x': 3, 'y': None, 'z': 3}
+
+
+
+
+dict.has_key(key)   True if dict has a key,else False
+a.has_key(‘x’)    
+return boole
+
+
+dict.iteritems()       an iterator over the (key,value) items of dict
+dict.iterkeys()        an iterator over the keys of dict
+dict.itervalues()    an iterator over the values of dict
+a={‘x’:1,’y’:2,’z’:3}
+for i,k in a.iteritems():
+    print i,k
+for i in a.iterkeys():
+    print i,
+for i in a.itervalues():
+    print i,
+
+
+dict.pop(k[,d])    remove specified key and return the corresponding value,if key not found d is return
+a={‘x’:1,’y’:2,’z’:3}
+a.pop(‘x’)   1
+a.pop(‘abc’,’sky’)   sky
+return value
+
+
+dict.popitem()    remove and return some (key,value) pair
+a={‘x’:1,’y’:2,’z’:3}
+a.popitem()
+(‘x’,1)
+return tuple
+
+
+dict.setdefault()   D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
+a={‘x’:1}
+a.setdefalut(‘y’)
+a.setdefault(‘z’,3)
+{'x': 1, 'y': None, 'z': 3}
+
+
+dict.fromkeys()     dict.fromkeys(S[,v]) -> New dict with keys from S and values equal to v.v defaults to None
+b=[1,2,3]
+a={}
+a.fromkeys(b)
+{1: None, 2: None, 3: None}
+b=[1,2,3]
+a={}
+c=[‘hello’]
+a.fromkeys(b,s)
+{1: ['hello'], 2: ['hello'], 3: ['hello']}
+return dict    但是不修改字典a
+
+
+dict.viewitems()
+dict.viewkeys()
+dict.viewvalues()
+
+
+元组内建方法
+tuple.index()
+tuple.count()
+
+字符串内建方法
+清楚空格，特殊的符号
+str.strip([chars])    str.rstrip()  str.lstrip()
+a=‘\t123abc23\t’
+a.strip()                 ‘123abc123’
+a.srtip(‘123’)        ‘\t123abc23\t’
+a.rstrip()            ‘\t123abc23’
+a.lsrtip(‘123’)        ‘\t123abc23\t’
+
+
+
+字符串的大小写转换
+str.lower()    return a copy of the string str converted to lower
+str.upper()
+str.swapcase()
+str.capitaize()
+a=‘hello,WORLD’
+a.lower()
+a.upper()
+a.swapcase()
+a.capitaize()
+
+
+
+字符串的判断
+str.isalnum()
+str.isalpha()
+str.isdigit()
+str.islower()
+str.isspace()
+str.istitle()
+str.isupper()
+str.startwith()
+str.endwith()
+
+a=‘Hello,world’
+a.startwith(‘H’)    True
+a.endwith(‘d’)        True
+
+
+字符串的分割，组合，查找，替换
+str.join(iterable)   return a string  the separator between elements is str
+l=[‘my’,’name’,’is’,’tom’]
+‘ ‘.join(l)
+‘_’.join(l)
+
+str.split()                Return a list of the words in the string S, using sep as the delimiter string
+astr=‘I | am | tom!’
+astr.split()            ['I', '|', 'am', '|', 'tom!']
+astr.split(‘|’)            ['I ', ' am ', ' tom!']
+
+
+str.find(sub [,start [,end]])   return the lowest index  if not find  return -1
+a=‘i am a student’
+a.find(‘am’)      2
+a.find(‘am’,3)    -1
+
+
+
+str.replace(oldster,newts,[count])   str.replace(old,newts,int)
+a=‘du,hello,du bye’
+a.replace(‘du’,’minchao’)    'minchao,hello,minchao bye'
+a.replace(‘du’,’minchao’,1)     'minchao,hello,du bye'
+
+str.count(sub[,start[,end]])     int  return the number of sub
+a=‘du,hello,du bye’
+a.count(‘du’)    return 2
+a.count(‘du’,3) return 1
+
+
+
+
+
