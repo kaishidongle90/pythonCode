@@ -1,231 +1,343 @@
-列表的内建方法
-list.appedn(object)          append object to end    return none
-a=[1,2,3]
-a.append(4)
-a.append({‘age’:34})
-return none
+列表：
+a.append   a.count    a.extend   a.index    a.insert   a.pop      a.remove   a.reverse  a.sort
 
-list.extend(utterable)    extend list by appending elements from the iterable    return  none
-a=[1,2,3]
-b=[3,4,5]
-a.extend(b)
-return none
+a = [1, 3, 3, 2]
 
-list.insert(index,object)  insert object before index
-a=[1,2,3]
-a.insert(0,’du’)
-return none
+1. a.append     L.append(object) -- append object to end   
+ 
+	In [6]:a.append('qing')     添加一个对象（字符串，字典，元组等），每次只能添加一个值
+	In [8]: a
+	Out[8]: [1, 3, 3, 2, 'qing']
 
-list.pop([index])  remove and return item at index(default last)
-a=[1,2,3,4,5]
-a.pop(0)
-a.pop()
-return item
+2. a.count     L.count(value) -> integer -- return number of occurrences of value   
+   
+   In [14]: a.count(3)     查看有没有‘3’ 这个值以及数量
+   Out[14]: 2
+   
+3. a.extend     L.extend(iterable) -- extend list by appending elements from the iterable
 
-list.reverse()
-a=[1,2,3,4]
-a.reverse()
-return  none
+	 In [23]: a.extend('qing')    将字符串拆封成单个的字符串
+   In [24]: a
+   Out[24]: [1, 3, 3, 2, 'qing', 'q', 'i', 'n', 'g']
+   In [313]: a.extend(['why','not'])
+   Out[314]: [1, 2, 3, 'apple' 'why', 'not']
+   
+4. a.index      L.index(value, [start, [stop]]) -> integer -- return first index of value.
+                Raises ValueError if the value is not present.
+   
+   In [35]: a
+   Out[35]: [1, 3, 3, 2, 'qing', 'q', 'i', 'n', 'g']
+   In [36]: a.index('qing')     查看字符串qing 所在的位置，从0开始计数，返回第一个查询到的值
+   Out[36]: 4
+   
+5. a.insert  		L.insert(index, object) -- insert object before index
+	
+   Out[44]: [1, 3, 3, 2, 'qing', 'q', 'i', 'n', 'g']  
+   
+	 In [46]: a.insert(1,'liang')       在第二个位置插入字符串liang
+   Out[47]: [1, 'liang', 3, 3, 2, 'qing', 'q', 'i', 'n', 'g']
 
-list.count(value)  return number of occurrences of value
-a=[1,2,3,3,3,4]
-a.count(1)
-a.count(3)
-
-list.index(value,[start,[stop]])  return first index of value
-a=[1,2,3,4,5,6,2]
-a.index(2)     1
-a.index(2,2,)  6
-
-list.remove(value)   remove first occurrence of value
-a=[1,2,3,4,2]
-a.remove(2)    a=[1,3,4,2]
-return  None
-
-list.sort(cmp=None,key=None,reverse=False) 
-a=[1,4,2,3,5]
-a.sort()    a=[1,2,3,4,5]
-a=[‘du’,’dumc’,’d’,’dddddd’]
-a.sort(key=len)  a=[‘d’,’du’,’dumc’,’dddddd’]
-a=[1,4,2,5]
-a.sort(cmp,reverse=True)    a=[5,4,2,1]
-
-
-
-字典内建方法
-dict.clear()        remove all items from dict
-a=dict(x=1,y=2)
-a.clear()
-a={}
-return  None
-
-
-dict.get(k,[,d])     dict[k]  if k in dict, else d.   d defaults  to None
-a=dict(x=1,y=2)
-a.get(‘x’)    x
-a.get(‘z’,’sky’)   sky
-return  value
-
-dict.keys()   list of dict’s keys
-a=dict(x=1,y=2)
-a.keys()    [‘x’,’y’]
-return list
-
-dict.values()      list of dict’s values
-a={‘x’:1,’y’:2}
-a.values()   [1,2]
-return list
-
-dict.items()      list of D's (key, value) pairs, as 2-tuples
-a={‘x’:1,’y’:2}
-a.items()   [('y', 2), ('x', 1)]
-return list
-
-dict.copy()   a shallow copy of D
-a={‘x’:1,’y’:2}
-b=a.copy()
-b[‘z’]=3
-b  {'x': 3, 'y': None, 'z': 3}
-a  {‘x’:1,’y’:2}
-a={‘x’:1,’y’:2}
-b=a
-b[‘z’]=3
-b  {'x': 3, 'y': None, 'z': 3}
-a  {'x': 3, 'y': None, 'z': 3}
+6  a.pop     			L.pop([index]) -> item -- remove and return item at index (default last).
+           				 Raises IndexError if list is empty or index is out of range.
+                 
+		In [55]: a
+		Out[55]: [1, 'liang', 3, 3, 2, 'qing', 'q', 'i', 'n']
+		In [56]: a.pop()           按位置删除列表， 为空 ，默认删除最后一个参数   
+		Out[56]: 'n'
+		In [58]: a.pop(-1)        -1 为倒数第一个， -2倒数第二个， 正数从0开始
+    Out[58]: 'i'
+    In [59]: a.pop(2) 
+    Out[59]: 3
+    
+    
+7. a.remove 		 L.remove(value) -- remove first occurrence of value.
+             			Raises ValueError if the value is not present.
+             
+    In [70]: a
+		Out[70]: [1, 'liang', 2]		
+		In [71]: a.remove('liang')	  按列表中的内容删除 
+		In [72]: a
+		Out[72]: [1, 2]
+		
+8. a.reverse 			L.reverse() -- reverse *IN PLACE*
+                                   
+   In [79]: a                      
+   Out[79]: [1, 2, 'liang', 'ming']
+   In [81]: a.reverse()        将字符串倒着排序                                    
+   In [82]: a                      
+   Out[82]: ['ming', 'liang', 2, 1]
+   
+   
+9. a.sort     L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+              cmp(x, y) -> -1, 0, 1              
+              
+   In [100]: a                                                                
+   Out[100]: [1, 2, 'liang', 'ming', 'apple']                                          
+   In [101]: a.sort()          按1234，abcd排序 ，数字优先                                                       
+   In [102]: a                               
+   Out[102]: [1, 2, 'apple', 'liang', 'ming']
+   
+   
+   
+   
+字典；  
+qing.clear       qing.fromkeys    qing.has_key     qing.iteritems   qing.itervalues  qing.pop         qing.setdefault  qing.values      qing.viewkeys  
+qing.copy        qing.get         qing.items       qing.iterkeys    qing.keys        qing.popitem     qing.update      qing.viewitems   qing.viewvalues
 
 
+qing = {'liang':'ming','qing':'fanqin' } 
+
+1. qing.clear    D.clear() -> None.  Remove all items from D.      
+
+	In [130]: qing                               
+	Out[130]: {'liang': 'ming', 'qing': 'fanqin'}
+	In [133]: qing.clear()        清空字典                 
+	In [134]: qing        
+	Out[134]: {}          
+	
+2. qing.fromkeys   dict.fromkeys(S[,v]) -> New dict with keys from S and values equal to v.
+                   函数用于创建一个新字典，以序列S中元素做字典的键，value为字典所有键对应的初始值。
+   In [152]: a                                               
+   Out[152]: [1, 2, 3, 'apple', 'big', 'hi', 'liang', 'ming']
+                                                          
+   In [153]: qing                                            
+   Out[153]: {'liang': 'ming', 'qing': 'fanqin'}   
+                                          
+   In [155]: qing.fromkeys(a)   将列表a的参数当做字典的key，没有指定 ， 默认value所以值为none
+   Out[155]:                    
+   {1: None, 2: None, 3: None,  'apple': None，'big': None, 'hi': None, 'liang': None, 'ming': None}               
+                             
+   In [156]: qing.fromkeys(a,10)   
+   Out[156]: {1: 10, 2: 10, 3: 10,'apple': 10,'big': 10，'hi': 10,'liang': 10,'ming': 10}    
+ 
+ 
+3.  qing.has_key         D.has_key(k) -> True if D has a key k, else False 
+     
+    In [159]: qing
+    Out[159]: {'liang': 'ming', 'qing': 'fanqin'} 
+    In [161]: qing.has_key('liang')     判断字典中是否有key--liang   若有返回True 否则 False
+    Out[161]: True
+    
+    
+4. qing.pop   	D.pop(k[,d]) -> v, remove specified key and return the corresponding value.
+								If key is not found, d is returned if given, otherwise KeyError is raised
+ 
+		In [167]: qing
+		Out[167]: {'liang': 'ming', 'qing': 'fanqin'}	
+		In [168]: qing.pop('liang')      删除字典中的key，value， 因为key值唯一，所以不用写value
+		Out[168]: 'ming'	
+		In [169]: qing
+		Out[169]: {'qing': 'fanqin'}
+		
+5. qing.setdefault   D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
+		In [169]: qing
+		Out[169]: {'qing': 'fanqin'}
+		In [174]: qing.setdefault('qing')     如果存在qing这个key 则直接返回结果
+		Out[174]: 'fanqin'
+		In [175]: qing.setdefault('liang')    如果不存在liang这个key  则将liang 当做key，直接添加到字典中，若不指定value，则为None
+		In [176]: qing
+		Out[176]: {'liang': None, 'missyou': None, 'qing': 'fanqin'}
+		In [182]: qing.setdefault('qin','sf')     若不存在qing这个key 这将key，value直接插入到字典中                                                                                                                                                                                                                                                                                    
+    Out[183]: {'liang': None, 'missyou': None, 'qin': 'sf', 'qing': 'fanqin'}
+    
+6. qing.values()   D.values() -> list of D's values
+                                                
+   In [187]: qing.values()      列出字典qing中所有的value值                
+   Out[187]: ['ele', 'fanqin', 'ming']
+   
+7. qing.keys()     D.keys() -> list of D's keys
+   
+   In [193]: qing.keys()         列出所有的key值                              
+   Out[193]: ['ting', 'qing', 'liang']
+   
+8. qing.items()    D.items() -> list of D's (key, value) pairs, as 2-tuples
+                                                                     
+   In [214]: qing.items()      以元组的形式列出字典中所有的内容                                      
+   Out[214]: [('ting', 'ele'), ('qing', 'fanqin'), ('liang', 'ming')]
+   
+9. qing.viewvalues				D.viewvalues() -> an object providing a view on D's values
+    
+    In [215]: qing.viewvalues()                     
+    Out[215]: dict_values(['ele', 'fanqin', 'ming'])
+    
+10. qing.viewkeys					D.viewkeys() -> a set-like object providing a view on D's keys
+
+		In [218]: qing.viewkeys()                    
+    Out[218]: dict_keys(['ting', 'qing', 'liang']
+    
+11. qing.viewitems()			D.viewitems() -> a set-like object providing a view on D's items
+		In [220]: qing.viewitems()                                                    
+    Out[220]: dict_items([('ting', 'ele'), ('qing', 'fanqin'), ('liang', 'ming')])
+    
+    
+12. qing.copy    D.copy() -> a shallow copy of D
+    
+    In [224]: ming=qing.copy()        复制字典                                                                                     
+    In [225]: ming                                              
+    Out[225]: {'liang': 'ming', 'qing': 'fanqin', 'ting': 'ele'}
+    
+13. qing.get			 D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
+		
+		In [227]: qing                                              
+    Out[227]: {'liang': 'ming', 'qing': 'fanqin', 'ting': 'ele'}                                                           
+    In [228]: qing.get('ting')   查询ting 对应的value值                               
+    Out[228]: 'ele'        
+    In [233]: qing.get('what')    当key不存在是 没有返回或者为none                                                     
+    In [234]:  
+    
+14. qing.popitem		D.popitem() -> (k, v), remove and return some (key, value) pair as a 2-tuple; but raise KeyError if D is empty.
+		In [240]: qing                                               
+    Out[240]: {'liang': 'ming', 'qing': 'fanqin', 'ting': 'ele'} In 
+    In [241]: qing.popitem()     为空， 默认删除最后一个
+    Out[241]: ('ting', 'ele')
+		              
+15. qing.update  D.update([E, ]**F) -> None.  Update D from dict/iterable E and F.         
+                 If E present and has a .keys() method, does:     for k in E: D[k] = E[k]  
+                 If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+	               In either case, this is followed by: for k in F: D[k] = F[k]              
+	   
+	  In [261]: qing                                                
+    Out[261]: {'liang': 'ming', 'qing': 'fanqin'}                                                                             
+    In [262]: ting = {'why':'boring'}                                                                                        
+    In [263]: qing.update(ting)   字典qing中没有字典ting的key值时  直接添加                                                                                          
+    In [264]: qing                                                
+    Out[264]: {'liang': 'ming', 'qing': 'fanqin', 'why': 'boring'}
+    
+    
+    In [274]: qing                                                
+    Out[274]: {'liang': 'ming', 'qing': 'fanqin', 'why': 'boring'}                                                             
+    In [275]: ting                                                
+    Out[275]: {'why': 'ele'}                                                                                                
+    In [276]: qing.update(ting)                                                                                              
+    In [277]: qing            字典qing中有字典ting的key值时   ， 直接修改                                 
+    Out[277]: {'liang': 'ming', 'qing': 'fanqin', 'why': 'ele'}   
+    
+    
+    
+    
+元组：  
+1.  ting.count     T.count(value) -> integer -- return number of occurrences of value
+		In [298]: ting = ('a','b','c')                            
+    In [303]: ting.count('b')
+    Out[303]: 1              
+    
+2.  ting.index		 T.index(value, [start, [stop]]) -> integer -- return first index of value
+    In [306]: ting.index('c')
+    Out[306]: 2             
+    
+    
+字符串：
+
+a.isdigit(                      a.rsplit(
+a.islower(                      a.rstrip(
+a.isspace(                      a.split(
+a.capitalize(                   a.istitle(                      a.splitlines(
+a.center(                       a.isupper(                      a.startswith(
+a.count(                        a.join(                         a.strip(
+a.decode(                       a.ljust(                        a.swapcase(
+a.encode(                       a.lower(                        a.title(
+a.endswith(                     a.lstrip(                       a.translate(
+a.expandtabs(                   a.partition(                    a.upper(
+a.find(                         a.replace(                      a.zfill(
+a.format(                       a.rfind(                        
+a.index(                        a.rindex(                       
+a.isalnum(                      a.rjust(                        
+a.isalpha(                      a.rpartition(    
+
+qing = 'lot of Yihan For You
+1. str.count()  //返回该字符串中某个子串出现的次数
+>>> qing
+'lot of Yihan For You'
+>>> qing.count('o')
+4
+
+2. str.find()   //返回某个子串出现在该字符串的起始位置
+>>> qing.find("Y")
+7 
+
+3. str.lower()  //将该字符串全部转化为小写
+>>> qing.lower()
+'lot of yihan for you'
+
+4. str.upper()  //转为大写
+>>> qing.upper()
+'LOT OF YIHAN FOR YOU'
+
+5. len(str)     //返回字符串长度
+>>> len(qing)
+20
+
+6.S.swapcase() #大小写互换 
+ >>> qing.swapcase()
+'LOT OF yIHAN fOR yOU'
+
+7. >>> qing.capitalize()   将首字母大写
+'Lot of yihan for you
+
+8.  name.split   将字符串拆分成列表的形式， 默认为空格
+>>> name.split("'")
+['what', 's your name']  
+
+9. str.join   
+>>> ming
+['what', 's your name']
+>>> '|'.join(ming)
+'what|s your name'
+>>> 
+
+文件 file
+
+f = file('/qing/qing.txt')
+
+f.close(             f.isatty(            f.readinto(          f.truncate(
+f.closed             f.mode               f.readline(          f.write(
+f.encoding           f.name               f.readlines(         f.writelines(
+f.errors             f.newlines           f.seek(              f.xreadlines(
+f.fileno(            f.next(              f.softspace           f.flush(            
+f.read(              f.tell(    
+
+1.  f.read()  将整个文件读出来，并以字符串的形式显示
+              'lalalani dong de \nni dong de \nsdfsd\nsfsfafsdfasfasdfsdfssssssssssssss\nllll\n'
+              
+2. f.readlines()  将整个文件读出来， 并以列表的形式显示
+              ['lalalani dong de \n', 'ni dong de \n', 'sdfsd\n', 'sfsfafsdfasfasdfsdfssssssssssssss\n', 'llll\n']
+              
+3.  f.readline()  一行一行读，以字符串的形式显示     
+     		>>> f.readline()
+					'lalalani dong de \n'
+				>>> f.readline()
+						'ni dong de \n'
+4.  f.mode
+    'r'
+    
+5. f.name
+'/qing/qing.txt'
+
+6.  f.next()    同f.readline()一样， 只是在读取到最后一行以后会报错，而readline（）不会报错
+    'llll\n'
+     f.next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration   
+>>> f.readline()
+''
+
+7. >>> f.seek(0)   跳到文件的指定字符位置，一般用作跳到文件开头的作用
+>>> f.tell()       显示文件当前位置
+0
+>>> f.seek(10)
+
+8. f.truncate()  删除字符，与当前位置无关，以开始位置计数， 默认字节
+
+ f = file('/qing/qing.txt','r+')   以读写模式打开
+     f.readlines()
+    ['lalalani dong de \n', 'ni dong de \n', 'sdfsd\n', 'sfsfafsdfasfasdfsdfssssssssssssss\n', 'llll\n']
+    >>> f.truncate(20)
+     f.readlines()
+   ['lalalani dong de \n', 'ni']
+
+9. 
 
 
-dict.has_key(key)   True if dict has a key,else False
-a.has_key(‘x’)    
-return boole
 
-
-dict.iteritems()       an iterator over the (key,value) items of dict
-dict.iterkeys()        an iterator over the keys of dict
-dict.itervalues()    an iterator over the values of dict
-a={‘x’:1,’y’:2,’z’:3}
-for i,k in a.iteritems():
-    print i,k
-for i in a.iterkeys():
-    print i,
-for i in a.itervalues():
-    print i,
-
-
-dict.pop(k[,d])    remove specified key and return the corresponding value,if key not found d is return
-a={‘x’:1,’y’:2,’z’:3}
-a.pop(‘x’)   1
-a.pop(‘abc’,’sky’)   sky
-return value
-
-
-dict.popitem()    remove and return some (key,value) pair
-a={‘x’:1,’y’:2,’z’:3}
-a.popitem()
-(‘x’,1)
-return tuple
-
-
-dict.setdefault()   D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
-a={‘x’:1}
-a.setdefalut(‘y’)
-a.setdefault(‘z’,3)
-{'x': 1, 'y': None, 'z': 3}
-
-
-dict.fromkeys()     dict.fromkeys(S[,v]) -> New dict with keys from S and values equal to v.v defaults to None
-b=[1,2,3]
-a={}
-a.fromkeys(b)
-{1: None, 2: None, 3: None}
-b=[1,2,3]
-a={}
-c=[‘hello’]
-a.fromkeys(b,s)
-{1: ['hello'], 2: ['hello'], 3: ['hello']}
-return dict    但是不修改字典a
-
-
-dict.viewitems()
-dict.viewkeys()
-dict.viewvalues()
-
-
-元组内建方法
-tuple.index()
-tuple.count()
-
-字符串内建方法
-清楚空格，特殊的符号
-str.strip([chars])    str.rstrip()  str.lstrip()
-a=‘\t123abc23\t’
-a.strip()                 ‘123abc123’
-a.srtip(‘123’)        ‘\t123abc23\t’
-a.rstrip()            ‘\t123abc23’
-a.lsrtip(‘123’)        ‘\t123abc23\t’
-
-
-
-字符串的大小写转换
-str.lower()    return a copy of the string str converted to lower
-str.upper()
-str.swapcase()
-str.capitaize()
-a=‘hello,WORLD’
-a.lower()
-a.upper()
-a.swapcase()
-a.capitaize()
-
-
-
-字符串的判断
-str.isalnum()
-str.isalpha()
-str.isdigit()
-str.islower()
-str.isspace()
-str.istitle()
-str.isupper()
-str.startwith()
-str.endwith()
-
-a=‘Hello,world’
-a.startwith(‘H’)    True
-a.endwith(‘d’)        True
-
-
-字符串的分割，组合，查找，替换
-str.join(iterable)   return a string  the separator between elements is str
-l=[‘my’,’name’,’is’,’tom’]
-‘ ‘.join(l)
-‘_’.join(l)
-
-str.split()                Return a list of the words in the string S, using sep as the delimiter string
-astr=‘I | am | tom!’
-astr.split()            ['I', '|', 'am', '|', 'tom!']
-astr.split(‘|’)            ['I ', ' am ', ' tom!']
-
-
-str.find(sub [,start [,end]])   return the lowest index  if not find  return -1
-a=‘i am a student’
-a.find(‘am’)      2
-a.find(‘am’,3)    -1
-
-
-
-str.replace(oldster,newts,[count])   str.replace(old,newts,int)
-a=‘du,hello,du bye’
-a.replace(‘du’,’minchao’)    'minchao,hello,minchao bye'
-a.replace(‘du’,’minchao’,1)     'minchao,hello,du bye'
-
-str.count(sub[,start[,end]])     int  return the number of sub
-a=‘du,hello,du bye’
-a.count(‘du’)    return 2
-a.count(‘du’,3) return 1
-
-
-
-
-
+       
