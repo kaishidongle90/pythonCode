@@ -1,0 +1,221 @@
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+try:
+   print qing
+except NameError:            
+   print "name is worong"
+[root@ting qing]# python err.py 
+name is worong
+[root@ting qing]# 
+
+
+
+[root@ting qing]# python err.py 
+0
+1
+2
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+for i in range(3):
+ try:
+     print i 
+     print qing
+ except NameError:
+#    pass           pass| continue  对异常不做任何处理
+     continue
+[root@ting qing]# 
+
+
+一个文件里有多个错误 默认跳到第一个错误 而不执行其他的错误	
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+qin = [1,2,3]
+for i in range(3):
+ try:
+#     qing[3]
+     print i 
+     print qing
+     qin[3]
+ except NameError:
+#    pass
+#     continue
+     print 'name is wrong'
+ except IndexError:
+     print "guo l"
+  except ：
+     print ‘lala’  万能错误， 只要是错误就会抛出这个异常
+[root@ting qing]#
+
+
+[root@ting qing]# python err.py 
+0
+name is wrong
+1
+name is wrong
+2
+name is wrong
+
+
+
+手动触发异常：
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+try:
+ qin = [1,2,3]
+ for i in range(3):
+  print i
+  raise TypeError
+except TypeError:
+  print 'demaxiya'
+[root@ting qing]# python err.py 
+0
+demaxiya
+
+
+定制属于自己的异常：
+[root@ting qing]# 
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+class qing(Exception):
+   pass
+try: 
+   num =  int(raw_input('write something:'))
+   if num != 25:
+       raise qing
+except qing:
+    print 'demaxiya'
+[root@ting qing]# python err.py 
+write something:23
+demaxiya
+[root@ting qing]# python err.py 
+write something:25
+[root@ting qing]# 
+
+
+
+无论是否有异常 都只能finally下面的命令
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+class qing(Exception):
+   pass
+try: 
+   num =  int(raw_input('write something:'))
+   if num != 25:
+       raise qing
+except qing:
+    print 'demaxiya'
+finally:
+    print 'YOGA'
+[root@ting qing]# python err.py 
+write something:23
+demaxiya
+YOGA
+[root@ting qing]# python err.py 
+write something:25
+YOGA
+[root@ting qing]# 
+
+
+
+没有异常：（通常用于代码测试）
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+class qing(Exception):
+   pass
+try: 
+   num =  int(raw_input('write something:'))
+   if num != 25:
+       raise qing
+except qing:
+    print 'demaxiya'
+else:    如果代码没有异常 ，则执行下面的的语句
+    print 'YOGA'
+[root@ting qing]# python err.py 
+write something:33
+demaxiya
+[root@ting qing]# python err.py 
+write something:25
+YOGA
+[root@ting qing]# 
+
+定位异常：
+[root@ting qing]# 
+[root@ting qing]# cat err.py 
+#!/usr/bin/env python
+class qing(Exception):   继承函数 不能为空
+   pass
+try: 
+   num =  int(raw_input('write something:'))
+   if num != 25:
+       raise qing, "this way is conviniation to find"  定义抛出异常之后 返回的字符串
+except qing,date:   两个变量
+    print 'demaxiya'
+    print date     字符串
+else:
+    print 'YOGA'
+[root@ting qing]# python err.py 
+write something:33
+demaxiya
+this way is conviniation to find
+[root@ting qing]# 
+
+
+
+变量的范围：
+bgel
+b 内建
+g 全局
+e 闭包
+l local（函数）
+
+a=1
+
+def f1():
+    a = 2 
+    print a
+    def f11():
+        a = 3 
+        print a
+    f11()
+
+f1()
+print a
+
+
+查看模块的默认路径
+import sys
+sys.path
+
+
+导入模块  
+导入包（）： ——init——。py  
+__init__()
+
+
+文件打开方式
+wb
+r+
+
+
+文件操作
+seek  负责移动光标 0 开始位置 1, 当前位置 2 最后位置   正数先后  负数向前
+tell   告诉当前位置
+
+read readline   返回字符串
+readlines   返回列表
+迭代器解决readlins  大的文件
+
+
+vim
+set paste
+
+
+
+with open（） as f    -----  f = open()
+
+
+
+数据切割，合并
+
+迭代器，
+
