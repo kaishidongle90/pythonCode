@@ -1,0 +1,606 @@
+python（进入）
+  print "hello world"
+  2+3
+  
+执行：
+python qing.py
+chmod 755 qing.py && ./qing.py 
+
+导入模块：
+import qing(qing.py) 
+ 
+变量：
+user_name = 'qing'  1. 字符串  2. 不加引号即为变量， 如果搜索不到这个变量 就会报错
+										2. 数字（27） 不需要加加引号，   qing = ‘1’ + ‘28’  显示结果为128   即字符串拼接
+
+
+python书写要求：
+1. 同一级别代码缩进保持一致，不处于同一级别不在同一行
+2. 变量可以用 单引号 '  字符串里有双引号的时候用单引号
+							双引号 '' 字符串里有单引号的时候用双引号
+						  三个单引号引用 ''' 字符串含有多行时 用三个引号
+3. 注释：  单行用 #   多行用 '''   '''  3 个两组单引号
+
+
+
+模块：  重复引用一些代码
+
+用户的输入交互：
+>>> name = raw_input('you guess:')
+you guess:true
+
+>>> print name
+
+
+
+#!/usr/bin/env python
+this_year = 2015
+name = raw_input('please write you name :')
+age = int(raw_input('write you age:'))   将字符串转化为整数
+print "hello",name,"\n"
+print "age:",age
+print "you were born in :", this_year - age
+
+
+#!/usr/bin/env python
+this_year = 2015
+name = raw_input('please write you name :').strip()   注： .strip  忽略输入的空格
+if len(name) == 0: print "empty name , try again"   判断输入是否为空
+age = int(raw_input('write you age:'))
+dep = raw_input('where do you stay:')
+message = '''Information of company staff
+            name: %s
+            age:  %s    可将%s换成%d 即为 数字类型， %s 默认整数类型
+            dep:  %s
+          '''  % (name, age, dep)   在字符串中引用变量  例如：print "hello %s world" % (age)
+print message
+
+#if判断语句,
+if age < 30:    注意冒号
+  print "you are young!!"
+elif age == 30
+  print "you are right"
+else:           注意冒号     
+  print "you are old!!"
+~                      
+
+user = "qing"
+if user == name:
+  print "Welcome to BeiJing %s" %(name)
+else:
+  print "YOU went the wrong way!!"   
+
+
+while True:   当输入为空时时就不断的提示输入 直到字符串不为空为止
+  name = raw_input('please write you name :').strip()   
+  if len(name) == 0: 
+        print "empty name , try again"
+        continue
+  else:
+        break
+
+和上面效果以一样： 注意break的缩进
+while True:
+  name = raw_input('please write you name :').strip()
+  if len(name) == 0:
+        print "empty name , try again"
+        continue
+  break
+
+
+#!/usr/bin/env python
+user = "qing"
+while True:
+  name = raw_input('please write you name :').strip()
+  if len(name) == 0:
+        print "empty name , try again"
+        continue
+  elif user == name:
+        print "Welcome to BeiJing %s" % （name）
+  else:
+        print " %s is a valid user" % name   当字符串中只有一个变量的时候 可以不写（）
+        continue
+  break
+
+
+计数器：
+#!/usr/bin/env python
+import sys  导入sys.exit这个模块
+user = "qing"
+counter = 0
+while True:
+ if counter < 3: 计数器，注意缩进
+  name = raw_input('please write you name :').strip()
+  if len(name) == 0:
+        print "empty name , try again"
+        continue
+  elif user == name:
+        pass #print "Welcome to BeiJing %s" %(name)
+  else:
+        print " %s is a valid user" % name
+        counter += 1  注意位置 不能在continue下边
+        continue
+  break
+ else:
+  print "too many times"
+  sys.exit()
+  
+  
+读取文件：
+python
+import tab    注： 导入补全模块 参考文当：http://www.xshell.net/python/centos_python_tab.html
+f = open('qing.txt')
+f.readline（）(tab可补全)
+>>> f.readline();
+'qing\n'   显示结果
+
+len(f.readline())  显示
+
+>>> f.close();  关闭
+
+>>> f.write('ming,bj')
+>>> f.write('ting,baotou,26')
+>>> f.flush()  将文件刷新写入
+>>> f.close()  文件打开 必须关闭 要不会残留文件在内存中
+
+
+文件替换(全局)：
+[root@localhost qing]# cat replace.py 
+#!/usr/bin/env python
+
+import fileinput
+for line in fileinput.input('qing.txt',inplace=1):  替换的文件名字qing.txt
+        line = line.replace('ting','tingting')  旧字符串：新字符串
+        print line
+
+
+列表：
+name = [] 定义一个空列表
+len(name)  列表的长度 
+type(name)  列表的类型
+name.append('ting')  添加内容
+ help(name.insert)  查询帮助
+ name.insert(4,'w') 插入数据， 从0开始记位！
+ name[1] = 'liangming'  将第二个位置字符串改为'liangming'
+name.pop(-2) 按位置删除， 删除倒数第二数据， 0为正数第一个， -1为倒数第二个
+name.remove("ting")  按字符串的名字删除
+name.count('qing')   查看有没有‘qing’ 这个值以及数量
+>>> 'w' in name   第二种方法查看 字符串是否存在列表中，不能再值为False
+False
+name.index('liangming')  查看‘liangming’所在的位置。
+ name.extend('QING')  将字符串拆成单个字符
+ >>> name  查看列表name的 内容
+['fan', 'liangming', 'qing', 'ming', 'Q', 'I', 'N', 'G']
+
+name.reverse()  将列的内容倒着排列
+>>> name
+['G', 'N', 'I', 'Q', 'ming', 'qing', 'liangming', 'fan']
+
+name.sort()   排序
+>>> name
+['G', 'I', 'N', 'Q', 'fan', 'liangming', 'ming', 'qing']
+
+
+name = ['a', 'b', 'c']   列表
+ name = ('a', 'b', 'c')   元组 name.count，name.index  只有这两个选项， 不能修改， 可用于一些固定的变量
+ 
+ 
+>>> a  = 'a b c d e f g h 1 2 3 + = *&'  声明变量
+'a b c d e f g h 1 2 3 + = *&'
+
+>>> a.split()  将变量转化为列表  注意和上边显示结果不同
+['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', '1', '2', '3', '+', '=', '*&']
+
+>>> a.split('=')  以等号为分隔符
+['a b c d e f g h 1 2 3 + ', ' *&']
+
+
+字典：
+[root@localhost qing]# vim information.py    
+
+qing = {
+        'qing' : 'I love you !' ,   注意格式
+        'ting' : 'I miss you ! ',
+        'wang' : 'leave me alone!',
+        }
+qing['mi'] = 'boring'   添加一条新的值
+qing['ting'] = 'suan l '  修改字典的值      {'ting': 'suan l ', 'qing': 'I love you !', 'mi': 'boring', 'wang': 'leave me alone!'}
+del qing['ting']    删掉一个key
+qing.popitem()  默认删掉第一个
+print qing['wang']
+print qing.keys()    显示所有key
+print qing.values()  显示所有值
+print qing  打印整个字典
+for k,v in qing.items():  遍历整个字典
+   print k,v || print type(v)  打印值的类型（not key）
+   
+   
+   
+
+[root@localhost qing]# python information.py 
+leave me alone!
+['ting', 'qing', 'wang']
+['I miss you ! ', 'I love you !', 'leave me alone!']
+{'ting': 'I miss you ! ', 'qing': 'I love you !', 'mi': 'boring', 'wang': 'leave me alone!'}
+
+
+>>> qing.has_key('qing')   查看字典中是否存有qing这个key
+True
+>>> 'qing' in qing     也可以这样查
+True
+
+>>> qing.keys()   查询所有key
+['ting', 'qing', 'wang']
+>>> qing.values()  查询所有值
+['I miss you ! ', 'I love you !', 'leave me alone!']
+
+
+
+vim information.py    
+qing = {
+        'qing' : ['I love you !', 'so much'],
+        'ting' : 'I miss you ! ',
+        'wang' : 'leave me alone!',
+        'liang' : {'123':'321','456':'654'},
+        }
+for k,v in qing.items():
+        if type(v) is list:    如果值的类型为list  则单独每一行打印出来
+           for i in v:
+              print "\t",k,i
+        elif type(v) is dict:   如果值的类型为字典， 单独打印出来
+              for a,d in v.items():
+                print "---->",a,d   
+        else:
+           print k,v
+
+
+
+>>> name = 'qing'    判断变量是否为字符串类型
+>>> type(name) is str
+True
+>>> type(name) == str
+True
+
+
+
+定义函数：
+#!/usr/bin/env python
+import os
+username = 'root'
+ip = '192.168.4.34'
+def ssh(a,b):
+    cmd = 'ssh %s@%s' %(a,b)
+    print cmd
+    os.system(cmd)
+ssh(username,ip)  此值将会映射成函数的a,b
+
+
+"function.py" 7L, 123C written                                                                                                                        
+[root@localhost qing]# python function.py 
+a= 1 b= 2 c= 3
+a= 25 b= 10 c= 24
+a= 100 b= 10 c= 30
+[root@localhost qing]# cat function.py 
+#!/usr/bin/env python
+def fun(a,b = 10, c = 20):
+  print 'a=',a,'b=',b ,'c=',c
+
+fun(1 ,2 , 3)
+fun(25,c=24)
+fun(c=30,a=100)
+[root@localhost qing]# 
+
+
+函数返回值
+[root@localhost qing]# vim function.py    
+
+#!/usr/bin/env python
+def fun(a,b = 10, c = 20):
+  print 'a=',a,'b=',b ,'c=',c
+
+def guess(a,b):
+  if a > b:
+        #print a
+        return 123
+  else:
+        return b
+
+c = guess(10,5)
+print c
+
+if c == 123: print 'you win'
+
+[root@localhost qing]# python function.py 
+123
+you win
+
+
+
+[root@localhost qing]# 
+[root@localhost qing]# cat contact.txt 
+1 fanqing    baotou     1572469963
+2 wangting   baotou     125789633
+3 lishuang   tongliao   1357992
+4 luochunhao arongqi    13454876
+[root@localhost qing]# python today.py 
+1 fanqing    baotou     1572469963
+
+2 wangting   baotou     125789633
+
+3 lishuang   tongliao   1357992
+
+4 luochunhao arongqi    13454876
+
+
+[root@localhost qing]# cat today.py 
+#!/usr/bin/env python
+contact = 'contact.txt'
+f = file(contact)
+while True:
+        line = f.readline()
+        print line
+        if len(line) == 0: break
+f.close()
+[root@localhost qing]# 
+
+
+
+
+[root@localhost qing]# python today.py 
+1 fanqing    baotou     1572469963
+2 wangting   baotou     125789633
+3 lishuang   tongliao   1357992
+4 luochunhao arongqi    13454876
+[root@localhost qing]# cat today.py 
+#!/usr/bin/env python
+contact = 'contact.txt'
+f = file(contact)
+while True:
+        line = f.readline()
+        if len(line) == 0: break   加此判断 最后一行不在为空
+        print line,   加个逗号， 不打印空行
+f.close()
+[root@localhost qing]# 
+
+
+[root@localhost qing]# vim today.py      这么写可以实现上面一样的效果
+
+#!/usr/bin/env python
+contact = 'contact.txt'
+f = file(contact)
+for line in f.readlines():
+        print line,
+f.close()
+
+写入文件
+[root@localhost qing]# cat today.py          
+#!/usr/bin/env python
+contact = 'contact.txt'
+f = file(contact,'a')
+f.write('qing\n')
+f.write('ming')
+[root@localhost qing]# 
+
+
+制作模块
+[root@localhost qing]# cat mk_modle.py
+#!/user/bin/env python
+import sys
+import os
+qing = 'I Love You'
+def ls():
+  os.system('df -h')
+[root@localhost qing]# python
+Python 2.6.6 (r266:84292, Feb 22 2013, 00:00:18) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-3)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import tab
+>>> import mkdle
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ImportError: No module named mkdle
+>>> import mk_modle
+>>> mk_modle
+mk_modle
+>>> mk_modle.
+mk_modle.__class__(         mk_modle.__format__(        mk_modle.__new__(           mk_modle.__setattr__(       mk_modle.os
+mk_modle.__delattr__(       mk_modle.__getattribute__(  mk_modle.__package__        mk_modle.__sizeof__(        mk_modle.qing
+mk_modle.__dict__           mk_modle.__hash__(          mk_modle.__reduce__(        mk_modle.__str__(           mk_modle.sys
+mk_modle.__doc__            mk_modle.__init__(          mk_modle.__reduce_ex__(     mk_modle.__subclasshook__(  
+mk_modle.__file__           mk_modle.__name__           mk_modle.__repr__(          mk_modle.ls(                
+>>> mk_modle.qing
+'I Love You'
+>>> mk_modle.ls()
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda3              27G  2.5G   23G  10% /
+tmpfs                 754M   88K  754M   1% /dev/shm
+/dev/sda1             291M   33M  243M  12% /boot
+>>> 
+
+
+#!/user/bin/env python
+import sys
+import os
+qing = 'I Love You'
+def ls():
+  os.system('df -h')
+if __name__ == '__main__':     当做脚本调用
+  print 'jiaoben'
+else:                           当做模块调用
+  print 'mokuai'
+  
+  [root@localhost qing]# python mk.py
+jiaoben
+[root@localhost qing]# python
+Python 2.6.6 (r266:84292, Feb 22 2013, 00:00:18) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-3)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mk
+mokuai
+>>> 
+
+
+
+AttributeError	#试图访问一个对象没有的属性，比如foo.x，但是foo没有属性x
+  注：>>> mk.love
+					Traceback (most recent call last):
+ 					 File "<stdin>", line 1, in <module>
+					AttributeError: 'module' object has no attribute 'love'
+ 
+IOError	#输入输出异常，基本上是无法打开文件
+				>>> file('qint.txt')
+						Traceback (most recent call last):
+  					File "<stdin>", line 1, in <module>
+						IOError: [Errno 2] No such file or directory: 'qint.txt'
+
+ImportError	#无法引入模块或包，基本上是路径问题或文件名错误
+						>>> import abcde
+								Traceback (most recent call last):
+  							File "<stdin>", line 1, in <module>
+								ImportError: No module named abcde
+											
+IndentationError	#语法错误（的子类），缩进错误，代码没有正确对齐。（不处理）
+					# python error.py 
+ 						 File "error.py", line 3
+    				print '321'
+    ^
+            IndentationError: unexpected indent
+					
+IndexError	#下标索引超出序列边界，比如当x只有三个元素，却试图访问x[5]
+						>>> a = [1,2,3]
+            >>> a
+            [1, 2, 3]
+            >>> a[0]
+            1
+            >>> a[5]
+            Traceback (most recent call last):
+              File "<stdin>", line 1, in <module>
+            IndexError: list index out of range
+					
+KeyError	#试图访问字典里不存在的键
+				>>> a = {'1':1,'2':'2'}
+				>>> a['1']
+        1
+        >>> a['3']
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+        KeyError: '3'
+
+
+KeyboardInterrupt	#ctrl+C被按下.
+
+
+
+NameError	#使用一个还未被赋予对象的变量
+      >>> print c
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+      NameError: name 'c' is not defined
+      
+SyntaxError	#python代码非法，代码不能编译（个人认为这时语法错误，写错了）（不处理）
+
+
+TypeError	#传入对象类型与要求的不符合。
+UnboundLocalError	#试图访问一个还未被设置的局部变量，基本上是由于另有一个同名的全局变量，导致你认为正在访问他。
+ValueError	#传入一个调用者不期望的值，即使值的类型是正确的。
+
+
+手动触发异常
+raise TypeError
+制作自己的异常
+class MyExeption(Exception):
+	pass
+try:
+	#some code here
+	option = int(raw_input('guess my age:'))
+	if option != 28:
+		raise MyException
+except MyException:
+	print
+
+
+try...finally
+finally 无论try块是否抛出异常，永远执行的代码，通常用来执行关闭文件，断开服务器连接的功能。
+class MyExceptin(Exception):pass
+try:
+	raise MyException
+except MyException:
+	print "MyException!"
+finally:
+	print "Arrive finally"
+
+可以在try块里加入else块，代码块将在没有异常被抛出的时候执行：
+try:
+	print "normal coede here."
+except MyException:
+	print "MyException!"
+else:
+	print "No exception!"
+
+raise异常，同时添加数据
+raise异常的同时，我们可以添加一些额外的数据，就像下面的例子一样：
+class MyExceptin(Exception):pass
+try:
+	raise MyException,"and some additional data!!!"
+except MyException,data:
+	print data
+	
+	
+	
+	[root@localhost qing]# vim try.py    
+
+#!/usr/bin/env python
+try:
+    for i in range(10):
+      print i
+      print nb
+except NameError:
+	print "wrong"
+
+[root@localhost qing]# python try.py 
+0
+wrong
+
+
+
+
+[root@localhost qing]# vim class.py +31
+
+#!/usr/bin/env python
+class qing:
+  def __init__(self,Type,Sex,Age,Name,guess,where):
+    self.t = Type
+    self.s = Sex
+    self.a = Age
+    self.n = Name
+    self.g = guess
+    self.where = 'bj'    定义默认参数
+
+  def talk(self,msg = 0):
+    self.m = msg
+    if self.m != 0: print 'lalala demaxiya'
+
+#t = qing('chinese','female', '24','qing')
+#t.talk(1)
+
+class liang(qing):
+  def __init__(self,Single,Salary,Type,Sex,Age,Name,guess,where):
+    qing.__init__(self,Type,Sex,Age,Name,guess,where)
+    self.single = Single
+    self.salary = Salary
+
+  def ming(self):
+    print ''' 
+           
+        I'm %s man , I earn %s Yuan , I am %s male , My name is %s
+
+          ''' % (self.single,self.salary,self.s,self.n)
+    print self.g       直接调用父类的变量
+    print self.where   调用父类变量，但是父类已经给了一个默认值， 所以 其他给予的任何参数 均不生效
+
+l = liang('chinese','male','25','qing','single','1000','bullshit','sh')
+
+
+#l = liang('chinese','male')
+l.talk(1)
+l.ming()
