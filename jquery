@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("p.p3").toggle();
+  });
+  $("#show").click(function(){
+     $("p#p2").show()
+  });
+  $("#test").click(function(){
+    // console.log("qing" + $("p#p2").text());
+    // alert($("p#p2").html());  与text一样 获取元素的内容 但是html()可以获取html的标签
+    //alert($("#in").val())     获取值 例如 input框中内容
+    //alert($("#test").attr("type"))  获取元素属性
+    //$("#p2").text("qing")   修改文本内容
+    // $("#p2").text(function(i,old ){  # 利用回调函数可以显示得到旧值
+    //     return "qing" + old ;
+    // });
+    //$("#p2").html("<b>qing</b>")  修改p标签的内容 
+    //$("#p2").append("qing") 在元素行位添加内容
+    //$("#p2").prepend("ting") 在元素行位添加内容
+    // $("#p2").before("ting") 在上一行添加
+    // $("#p2").after("ting")  在选中标签的下一行添加
+    // function afterText()    使用函数 添加多个字段
+    //     {
+    //     var txt1="<b>I </b>";                    // 以 HTML 创建新元素
+    //     var txt2=$("<i></i>").text("love ");     // 通过 jQuery 创建新元素
+    //     var txt3=document.createElement("big");  // 通过 DOM 创建新元素
+    //     txt3.innerHTML="jQuery!";
+    //     $("img").after(txt1,txt2,txt3);          // 在 img 之后插入新元素
+    //     }
+    //$("#p2").remove(); 移除标签
+     // $("p").remove("#p1");  删除id为1的p标签
+     //   $("#div1").empty(); 清空标签里面的内容
+     // $("#p2").addClass(".ziti .other")
+     //    addClass() - 向被选元素添加一个或多个类
+     //    removeClass() - 从被选元素删除一个或多个类
+     //    toggleClass() - 对被选元素进行添加/删除类的切换操作
+     //    css() - 设置或返回样式属性
+     // $("p").css("background-color"); 返回指定的 CSS 属性的值
+     // $("p").css("background-color","yellow"); 设置 CSS 属性
+     // $("p").css({"background-color":"yellow","font-size":"200%"});
+
+  });
+
+});
+</script>
+<style type="text/css">
+.ziti
+{
+font-weight:bold;
+font-size:xx-large;
+}
+
+</style>
+</head>
+
+<body>
+<p id="p1 " class="p3">如果点击“隐藏”按钮，我就会消失。</p>
+<p id="p2" >开始懂了</p>
+<div id='div1'>
+    <input type="text" >
+    <em>lalala</em>
+</div>
+<input type="text" id='in'>
+<div>This is div </div>
+<button id="hide" type="button">隐藏</button>
+<button id="show" type="button">显示</button>
+<button id="test" type="button">文本</button>
+</body>
+</html>
+
+
+$(function(){
+
+    var error_name = false;
+    var error_password = false;
+    var error_check_password = false;
+    var error_email = false;
+    var error_check = false;
+
+
+    $('#user_name').blur(function() {
+        check_user_name();
+    });
+
+    $('#pwd').blur(function() {
+        check_pwd();
+    });
+
+    $('#cpwd').blur(function() {
+        check_cpwd();
+    });
+
+    $('#email').blur(function() {
+        check_email();
+    });
+
+    $('#allow').click(function() {
+        if($(this).is(':checked'))
+        {
+            error_check = false;
+            $(this).siblings('span').hide();
+        }
+        else
+        {
+            error_check = true;
+            $(this).siblings('span').html('请勾选同意');
+            $(this).siblings('span').show();
+        }
+    });
+
+
+    function check_user_name(){
+        var username=$('#user_name').val()
+        var len = $('#user_name').val().length;
+        if(len<5||len>20)
+        {
+            $('#user_name').next().html('请输入5-20个字符的用户名')
+            $('#user_name').next().show();
+            error_name = true;
+        }
+        else
+        {
+            $.post("/check_name/",{username:username},
+                  function (data){
+                    if(data='ok')
+                    {   
+                        $('#user_name').next().html('用户名已存在');
+                        $('#user_name').next().show();
+                    }
+                    else
+                    {
+                        $('#user_name').next().hide();
+                                error_name = false;
+                    }
+
+
+                  });
+        }
+    }
+
+    function check_pwd(){
+        var len = $('#pwd').val().length;
+        if(len<8||len>20)
+        {
+            $('#pwd').next().html('密码最少8位，最长20位')
+            $('#pwd').next().show();
+            error_password = true;
+        }
+        else
+        {
+
+            $('#pwd').next().hide();
+            error_password = false;
+        }       
+    }
+
+
+    function check_cpwd(){
+        var pass = $('#pwd').val();
+        var cpass = $('#cpwd').val();
+
+        if(pass!=cpass)
+        {
+            $('#cpwd').next().html('两次输入的密码不一致')
+            $('#cpwd').next().show();
+            error_check_password = true;
+        }
+        else
+        {
+            $('#cpwd').next().hide();
+            error_check_password = false;
+        }       
+        
+    }
+
+    function check_email(){
+        var re = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;
+
+        if(re.test($('#email').val()))
+        {
+            $('#email').next().hide();
+            error_email = false;
+        }
+        else
+        {
+            $('#email').next().html('你输入的邮箱格式不正确')
+            $('#email').next().show();
+            error_check_password = true;
+        }
+
+    }
+
+
+    $('#reg_form').submit(function() {
+        check_user_name();
+        check_pwd();
+        check_cpwd();
+        check_email();
+
+        if(error_name == false && error_password == false && error_check_password == false && error_email == false && error_check == false)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    });
+
+
+
+
+
+
+
+
+})
