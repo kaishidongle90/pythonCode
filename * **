@@ -29,8 +29,7 @@ b is {'qing': 'qingmaoer'}
   --------------------------
 ting('qing','ting', qing='qingmaoer')    2. 函数变量的常用写法
 
-$ python zhangshiqi_test.py
 bian
 ting
-a is (1, 3, 5, 7, 9)
-b is {'a': 1, 'b': 2}
+a is ('qing', 'ting')
+b is {'qing': 'qingmaoer'}
